@@ -42,6 +42,9 @@ public class QuanLyHopDong extends javax.swing.JFrame {
         txtMaNhanVien = new javax.swing.JTextField();
         txtSoTienDaThanhToan = new javax.swing.JTextField();
         DateNgayLapHoaDon = new com.toedter.calendar.JDateChooser();
+        labLoaiHopDong = new javax.swing.JLabel();
+        radTraDu = new javax.swing.JRadioButton();
+        radTraGop = new javax.swing.JRadioButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         tableHopDong = new javax.swing.JTable();
         lblQuanLyHopDong = new javax.swing.JLabel();
@@ -73,6 +76,12 @@ public class QuanLyHopDong extends javax.swing.JFrame {
                 txtThoiGianBaoHanhActionPerformed(evt);
             }
         });
+
+        labLoaiHopDong.setText("Loại hợp đồng:");
+
+        radTraDu.setText("Trả đủ");
+
+        radTraGop.setText("Trả góp");
 
         javax.swing.GroupLayout jPanelNorthLayout = new javax.swing.GroupLayout(jPanelNorth);
         jPanelNorth.setLayout(jPanelNorthLayout);
@@ -107,12 +116,18 @@ public class QuanLyHopDong extends javax.swing.JFrame {
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 15, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNorthLayout.createSequentialGroup()
                                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                .addComponent(lblMaNV)
+                                .addGroup(jPanelNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                    .addComponent(labLoaiHopDong)
+                                    .addComponent(lblMaNV))
                                 .addGap(70, 70, 70)))))
                 .addGroup(jPanelNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addComponent(txtSoTienDaThanhToan)
                     .addComponent(txtMaNhanVien)
-                    .addComponent(DateNgayLapHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE))
+                    .addComponent(DateNgayLapHoaDon, javax.swing.GroupLayout.DEFAULT_SIZE, 242, Short.MAX_VALUE)
+                    .addGroup(jPanelNorthLayout.createSequentialGroup()
+                        .addComponent(radTraDu)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(radTraGop)))
                 .addGap(87, 87, 87))
         );
         jPanelNorthLayout.setVerticalGroup(
@@ -140,7 +155,7 @@ public class QuanLyHopDong extends javax.swing.JFrame {
                         .addComponent(lblThoiGianBaoHanh)
                         .addGap(60, 60, 60))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanelNorthLayout.createSequentialGroup()
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 33, Short.MAX_VALUE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 29, Short.MAX_VALUE)
                         .addGroup(jPanelNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtSoTienDaThanhToan, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(lblSoTienDaThanhToan))
@@ -153,7 +168,15 @@ public class QuanLyHopDong extends javax.swing.JFrame {
                                 .addGroup(jPanelNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                                     .addComponent(txtMaNhanVien, javax.swing.GroupLayout.PREFERRED_SIZE, 30, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(lblMaNV))))
-                        .addGap(37, 37, 37))))
+                        .addGroup(jPanelNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addGroup(jPanelNorthLayout.createSequentialGroup()
+                                .addGap(23, 23, 23)
+                                .addComponent(labLoaiHopDong))
+                            .addGroup(jPanelNorthLayout.createSequentialGroup()
+                                .addGap(18, 18, 18)
+                                .addGroup(jPanelNorthLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addComponent(radTraGop)
+                                    .addComponent(radTraDu)))))))
         );
 
         tableHopDong.setModel(new javax.swing.table.DefaultTableModel(
@@ -161,7 +184,7 @@ public class QuanLyHopDong extends javax.swing.JFrame {
 
             },
             new String [] {
-                "Mã hóa đơn", "Ngày lập", "Số tiền phải thanh toán", "Số tiền đã thanh toán", "Thời gian bảo hành", "Mã nhân viên", "Mã khách hàng"
+                "Mã hóa đơn", "Ngày lập", "Số tiền phải thanh toán", "Số tiền đã thanh toán", "Thời gian bảo hành", "Mã nhân viên", "Mã khách hàng", "Loại hợp đồng"
             }
         ));
         jScrollPane1.setViewportView(tableHopDong);
@@ -231,8 +254,8 @@ public class QuanLyHopDong extends javax.swing.JFrame {
                     .addComponent(btnSua)
                     .addComponent(btnLuu))
                 .addGap(32, 32, 32)
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 200, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(28, 28, 28))
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 217, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addContainerGap())
         );
 
         pack();
@@ -287,6 +310,7 @@ public class QuanLyHopDong extends javax.swing.JFrame {
     private javax.swing.JButton btnXoa;
     private javax.swing.JPanel jPanelNorth;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel labLoaiHopDong;
     private javax.swing.JLabel lblMaHD;
     private javax.swing.JLabel lblMaKH;
     private javax.swing.JLabel lblMaNV;
@@ -295,6 +319,8 @@ public class QuanLyHopDong extends javax.swing.JFrame {
     private javax.swing.JLabel lblSoTienDaThanhToan;
     private javax.swing.JLabel lblSoTienPhaiThanhToan;
     private javax.swing.JLabel lblThoiGianBaoHanh;
+    private javax.swing.JRadioButton radTraDu;
+    private javax.swing.JRadioButton radTraGop;
     private javax.swing.JTable tableHopDong;
     private javax.swing.JTextField txtMaHopDong;
     private javax.swing.JTextField txtMaKhachHang;
