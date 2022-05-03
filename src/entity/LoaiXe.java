@@ -1,5 +1,7 @@
 package entity;
 
+import java.util.Objects;
+
 public class LoaiXe {
 	private int maLoai;
 	private String tenLoai;
@@ -37,6 +39,23 @@ public class LoaiXe {
 	@Override
 	public String toString() {
 		return "LoaiXe [maLoai=" + maLoai + ", tenLoai=" + tenLoai + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		return Objects.hash(maLoai);
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		LoaiXe other = (LoaiXe) obj;
+		return maLoai == other.maLoai;
 	}
 	
 
