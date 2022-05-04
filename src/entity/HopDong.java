@@ -12,14 +12,17 @@ public class HopDong {
 	private String loaiHopDong;
 	private NhanVien nhanVien;
 	private KhachHang khachHang;
-	
+	private XeMay xeMay;
 	public HopDong() {
 		// TODO Auto-generated constructor stub
 	}
 	
 
+	
+
+
 	public HopDong(int maHD, Date ngayLap, double soTienPhaiThanhToan, double soTienDaThanhToan, String thoiGianBaoHanh,
-			String loaiHopDong, NhanVien nhanVien, KhachHang khachHang) {
+			String loaiHopDong, NhanVien nhanVien, KhachHang khachHang, XeMay xeMay) {
 		super();
 		this.maHD = maHD;
 		this.ngayLap = ngayLap;
@@ -29,11 +32,15 @@ public class HopDong {
 		this.loaiHopDong = loaiHopDong;
 		this.nhanVien = nhanVien;
 		this.khachHang = khachHang;
+		this.xeMay = xeMay;
 	}
 
 
+
+
+
 	public HopDong(Date ngayLap, double soTienPhaiThanhToan, double soTienDaThanhToan, String thoiGianBaoHanh,
-			String loaiHopDong, NhanVien nhanVien, KhachHang khachHang) {
+			String loaiHopDong, NhanVien nhanVien, KhachHang khachHang, XeMay xeMay) {
 		super();
 		this.ngayLap = ngayLap;
 		this.soTienPhaiThanhToan = soTienPhaiThanhToan;
@@ -42,7 +49,11 @@ public class HopDong {
 		this.loaiHopDong = loaiHopDong;
 		this.nhanVien = nhanVien;
 		this.khachHang = khachHang;
+		this.xeMay = xeMay;
 	}
+
+
+
 
 
 	public int getMaHD() {
@@ -102,12 +113,50 @@ public class HopDong {
 	}
 
 
+	public String getLoaiHopDong() {
+		return loaiHopDong;
+	}
+
+
+
+
+
+	public void setLoaiHopDong(String loaiHopDong) {
+		this.loaiHopDong = loaiHopDong;
+	}
+
+
+
+
+
+	public XeMay getXeMay() {
+		return xeMay;
+	}
+
+
+
+
+
+	public void setXeMay(XeMay xeMay) {
+		this.xeMay = xeMay;
+	}
+
+
+
+
+
 	@Override
 	public String toString() {
 		return "HopDong [maHD=" + maHD + ", ngayLap=" + ngayLap + ", soTienPhaiThanhToan=" + soTienPhaiThanhToan
 				+ ", soTienDaThanhToan=" + soTienDaThanhToan + ", thoiGianBaoHanh=" + thoiGianBaoHanh + ", loaiHopDong="
-				+ loaiHopDong + ", nhanVien=" + nhanVien + ", khachHang=" + khachHang + "]";
+				+ loaiHopDong + ", nhanVien=" + nhanVien + ", khachHang=" + khachHang + ", xeMay=" + xeMay + "]";
 	}
+
+
+
+
+
+	
 
 
 	

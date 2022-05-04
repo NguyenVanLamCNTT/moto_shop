@@ -6,9 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
-
-
-import entity.NhanVien;
 import entity.PhongBan;
 import util.ConnectDatabase;
 
@@ -37,9 +34,8 @@ public class DAO_PhongBan {
 		PreparedStatement stmt = null;
 		int n=0;
 		try {
-			stmt = con.prepareStatement("insert into" + "PhongBan(?,?)");
-			stmt.setInt(1, pb.getMaPhongBan());
-			stmt.setString(2, pb.getTenPhongBan());
+			stmt = con.prepareStatement("insert into" + " PhongBan(tenPhongBan) values(?)");
+			stmt.setString(1, pb.getTenPhongBan());
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -57,6 +53,7 @@ public class DAO_PhongBan {
 		PreparedStatement stmt = null;
 		String sql = "delete from PhieuNhanXet" + " where maPhongBan= ?";
 		try {
+			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, maPhongBan);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -68,7 +65,7 @@ public class DAO_PhongBan {
 		PreparedStatement stmt = null;	
 		int n=0;
 		try {
-			stmt = con.prepareStatement("update PhongBan set tenPhongBan=?" +"where maPhongBan=?");
+			stmt = con.prepareStatement("update PhongBan set tenPhongBan=?" +" where maPhongBan=?");
 			stmt.setString(1, pb.getTenPhongBan());	
 			stmt.setInt(2,pb.getMaPhongBan());
 			n = stmt.executeUpdate();

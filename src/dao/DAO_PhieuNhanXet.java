@@ -43,13 +43,12 @@ public class DAO_PhieuNhanXet {
 		PreparedStatement stmt = null;
 		int n=0;
 		try {
-			stmt = con.prepareStatement("insert into" + "PhieuNhanXet(?,?,?,?,?,?)");
-			stmt.setInt(1, pNX.getMaPhieu());
-			stmt.setString(2, pNX.getLiDoBH());
-			stmt.setString(3, pNX.getLoiThuocVe());
-			stmt.setDouble(4, pNX.getGiaTien());
-			stmt.setInt(5, pNX.getNhanVien().getMaNV());
-			stmt.setInt(6, pNX.getKhachHang().getMaKH());
+			stmt = con.prepareStatement("insert into" + " PhieuNhanXet(?,?,?,?,?)");
+			stmt.setString(1, pNX.getLiDoBH());
+			stmt.setString(2, pNX.getLoiThuocVe());
+			stmt.setDouble(3, pNX.getGiaTien());
+			stmt.setInt(4, pNX.getNhanVien().getMaNV());
+			stmt.setInt(5, pNX.getKhachHang().getMaKH());
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -67,6 +66,7 @@ public class DAO_PhieuNhanXet {
 		PreparedStatement stmt = null;
 		String sql = "delete from PhieuNhanXet" + " where maPhieu= ?";
 		try {
+			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, maPhieu);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -78,8 +78,8 @@ public class DAO_PhieuNhanXet {
 		PreparedStatement stmt = null;	
 		int n=0;
 		try {
-			stmt = con.prepareStatement("update PhieuNhanXet set liDoBH=?" +
-		"loiThuocVe=?, giaTien=?, maNV=?, maKH=?"+"where maPhieu=?");
+			stmt = con.prepareStatement("update PhieuNhanXet set liDoBH=? " +
+		"loiThuocVe=?, giaTien=?, maNV=?, maKH=?"+" where maPhieu=?");
 				
 			stmt.setString(1, pNX.getLiDoBH());
 			stmt.setString(2, pNX.getLoiThuocVe());

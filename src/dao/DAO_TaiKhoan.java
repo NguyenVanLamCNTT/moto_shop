@@ -42,10 +42,9 @@ Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = null;
 		int n =0;
 		try {
-			stmt = con.prepareStatement("insert into" + "TaiKhoan values(?,?,?)");
-			stmt.setInt(1, tk.getId());
-			stmt.setInt(2, tk.getNhanVien().getMaNV());
-			stmt.setString(3, tk.getPassword());
+			stmt = con.prepareStatement("insert into" + " TaiKhoan(maNV, password) values(?,?)");
+			stmt.setInt(1, tk.getNhanVien().getMaNV());
+			stmt.setString(2, tk.getPassword());
 			
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -64,6 +63,7 @@ Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = null;
 		String sql = "delete from PhieuNhanXet" + " where id= ?";
 		try {
+			stmt = con.prepareStatement(sql);
 			stmt.setInt(1, id);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,7 +75,7 @@ Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = null;	
 		int n=0;
 		try {
-			stmt = con.prepareStatement("update TaiKhoan set maNV=?, password=?"+"where id=?");
+			stmt = con.prepareStatement("update TaiKhoan set maNV=?, password=?"+" where id=?");
 				
 			stmt.setInt(1, tk.getNhanVien().getMaNV());
 			stmt.setString(2, tk.getPassword());	

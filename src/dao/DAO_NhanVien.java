@@ -84,14 +84,13 @@ public class DAO_NhanVien {
 		int n=0;
 		try {
 			stmt = con.prepareStatement("insert into"
-					+ "NhanVien values(?,?,?,?,?,?,?)");
-			stmt.setInt(1, nv.getMaNV());
-			stmt.setString(2, nv.getTenNV());
-			stmt.setString(3, nv.getChucVu());
-			stmt.setString(4, nv.getSoDienThoai());
-			stmt.setString(5, nv.getEmail());
-			stmt.setString(6, nv.getGioiTinh());
-			stmt.setString(7, nv.getRole());
+					+ " NhanVien(tenNV, chucVu, soDienThoai, email, gioiTinh, role) values(?,?,?,?,?,?)");
+			stmt.setString(1, nv.getTenNV());
+			stmt.setString(2, nv.getChucVu());
+			stmt.setString(3, nv.getSoDienThoai());
+			stmt.setString(4, nv.getEmail());
+			stmt.setString(5, nv.getGioiTinh());
+			stmt.setString(6, nv.getRole());
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -112,8 +111,8 @@ public class DAO_NhanVien {
 		PreparedStatement stmt = null;	
 		int n=0;
 		try {
-			stmt = con.prepareStatement("update NhanVien set tenNV=?" +
-		"chucVu=?, soDienThoai=?, email=?, gioiTinh=?, role=?"+"where maNV=?");
+			stmt = con.prepareStatement("update NhanVien set tenNV=? " +
+		"chucVu=?, soDienThoai=?, email=?, gioiTinh=?, role=? "+" where maNV=?");
 			
 			
 			stmt.setString(1, nv.getTenNV());
@@ -140,7 +139,7 @@ public class DAO_NhanVien {
 		
 	}
 	public boolean delete(int maNV) {
-		String sql = "delete * form NhanVien where maNV=?";
+		String sql = "delete from NhanVien where maNV=?";
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = null;	
 		int n=0;

@@ -78,12 +78,10 @@ public class DAO_KhachHang {
 		int n=0;
 		try {
 			stmt = con.prepareStatement("insert into"
-					+ "KhachHang values(?,?,?,?)");
-			
-			stmt.setInt(1, kh.getMaKH());
-			stmt.setString(2, kh.getTenKH());
-			stmt.setString(3, kh.getDiaChi());
-			stmt.setString(4, kh.getSoDienThoai());
+					+ " KhachHang(tenKH, diaChi, soDienThoai) values(?,?,?)");
+			stmt.setString(1, kh.getTenKH());
+			stmt.setString(2, kh.getDiaChi());
+			stmt.setString(3, kh.getSoDienThoai());
 			
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -106,10 +104,7 @@ public class DAO_KhachHang {
 		int n=0;
 		try {
 			stmt = con.prepareStatement("update KhachHang set tenNV=?" +
-		"diaChi=?, soDienThoai=?"+"where maKH=?");
-			
-			
-			
+		" diaChi=?, soDienThoai=? "+"where maKH=?");
 			stmt.setString(1, kh.getTenKH());
 			stmt.setString(2, kh.getDiaChi());
 			stmt.setString(3, kh.getSoDienThoai());
@@ -130,14 +125,13 @@ public class DAO_KhachHang {
 		return n >0;
 	}
 	public boolean delete(int maKH) {
-		String sql = "delete * form KhachHang where maKH=?";
+		String sql = "delete from KhachHang where maKH=?";
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = null;	
 		int n=0;
 		try {
 			stmt =con.prepareStatement(sql);
 			stmt.setInt(1, maKH);
-			
 			n = stmt.executeUpdate();
 		}catch(SQLException e) {
 			e.printStackTrace();

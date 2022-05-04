@@ -37,7 +37,7 @@ public class DAO_LoaiXe {
 		return dslx;
 		
 	}
-	public ArrayList<LoaiXe> getNhanVienTheoMaNV(String id) {
+	public ArrayList<LoaiXe> getLoaiXeTheoMaNV(String id) {
 		ArrayList<LoaiXe> dslx = new ArrayList<LoaiXe>();
 		
 		Connection con = ConnectDatabase.getConnection();
@@ -73,11 +73,9 @@ public class DAO_LoaiXe {
 		PreparedStatement stmt = null;	
 		int n=0;
 		try {
-			stmt = con.prepareStatement("insert into"
-					+ "LoaiXe values(?,?)");
-			
-			stmt.setInt(1, lx.getMaLoai());
-			stmt.setString(2, lx.getTenLoai());
+			stmt = con.prepareStatement("insert into "
+					+ "LoaiXe(tenLoai) values(?)");
+			stmt.setString(1, lx.getTenLoai());
 			
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -99,7 +97,7 @@ public class DAO_LoaiXe {
 		PreparedStatement stmt = null;	
 		int n=0;
 		try {
-			stmt = con.prepareStatement("update LoaiXe set tenLoai=?"+"where maNV=?");
+			stmt = con.prepareStatement("update LoaiXe set tenLoai=?"+" where maNV=?");
 			
 			
 			stmt.setString(1, lx.getTenLoai());
@@ -121,7 +119,7 @@ public class DAO_LoaiXe {
 		
 	}
 	public boolean delete(int maLoai) {
-		String sql = "delete * form LoaiXe where maLoai=?";
+		String sql = "delete form LoaiXe where maLoai=?";
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = null;	
 		int n=0;
