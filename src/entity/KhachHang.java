@@ -21,6 +21,9 @@ public class KhachHang {
 	public KhachHang() {
 		// TODO Auto-generated constructor stub
 	}
+	public KhachHang(int maKH) {
+		this.maKH = maKH;
+	}
 	public int getMaKH() {
 		return maKH;
 	}
