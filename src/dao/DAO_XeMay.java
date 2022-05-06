@@ -1,7 +1,11 @@
 package dao;
 
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
+import java.io.IOException;
+import java.io.InputStream;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -70,7 +74,7 @@ public class DAO_XeMay {
 		}
 	}
 	public boolean updateXeMay(XeMay xeMay, String path) {
-		String sql = "update XeMay set tenXe = ?, soPK = ?, mauXe = ?, nuocSanXuat = ?, dongia = ? hinhAnh = ?, maLoai = ?";
+		String sql = "update XeMay set tenXe = ?, soPK = ?, mauXe = ?, nuocSanXuat = ?, dongia = ?, hinhAnh = ?, maLoai = ? where maXe = ?";
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt;
 		try {
@@ -83,6 +87,7 @@ public class DAO_XeMay {
 			stmt.setDouble(5, xeMay.getDongia());
 			stmt.setBinaryStream(6, in);
 			stmt.setInt(7, xeMay.getLoaiXe().getMaLoai());
+			stmt.setInt(8, xeMay.getMaXe());
 			int n = stmt.executeUpdate();
 			return n>0;
 		}catch (SQLException e) {
@@ -101,5 +106,51 @@ public class DAO_XeMay {
 		PreparedStatement stmt = con.prepareStatement(sql);
 		int n = stmt.executeUpdate();
 		return n>0;
+	}
+	public String getImage(int id) throws SQLException, IOException  {
+		InputStream in;
+		FileOutputStream out;
+		String path = "";
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "Select * from XeMay  where maXe = " + id;
+		PreparedStatement stmt = con.prepareStatement(sql);
+		ResultSet rs = stmt.executeQuery();
+		File file = new File("brown_nhua.jpg");
+		out = new FileOutputStream(file);
+		if (rs.next()) {
+			in = rs.getBinaryStream("hinhAnh");
+			byte[] buffer = new byte[1024];
+			while (in.read(buffer) > 0) {
+				out.write(buffer);
+			}
+			path = file.getAbsolutePath();
+		}
+		out.close();
+		return path;
+	}
+	public List<XeMay> getListXeMayByTen(String tenXe){
+		List<XeMay> dsSach = new ArrayList<XeMay>();
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "select * from XeMay as xm join LoaiXe as lx on xm.maLoai = lx.maLoai where tenXe like " + tenXe;
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				XeMay xeMay = new XeMay();
+				xeMay.setMaXe(rs.getInt("maXe"));
+				xeMay.setDongia(rs.getDouble("dongia"));
+				xeMay.setLoaiXe(new LoaiXe(rs.getInt("maLoai"), rs.getString("tenLoai")));
+				xeMay.setMauXe(rs.getString("mauXe"));
+				xeMay.setNuocSanXuat(rs.getString("nuocSanXuat"));
+				xeMay.setSoPK(rs.getInt("soPK"));
+				xeMay.setTenXe(rs.getString("tenXe"));
+				dsSach.add(xeMay);
+			}
+			return dsSach;
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
 	}
 }
