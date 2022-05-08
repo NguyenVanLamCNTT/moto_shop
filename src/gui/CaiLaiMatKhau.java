@@ -4,6 +4,11 @@
  */
 package gui;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Administrator
@@ -30,12 +35,14 @@ public class CaiLaiMatKhau extends javax.swing.JFrame {
         btnHome = new javax.swing.JButton();
         lblTitle = new javax.swing.JLabel();
         lblNhapMKHT = new javax.swing.JLabel();
-        txtNhapMKHT = new javax.swing.JTextField();
         lblNhapMKM = new javax.swing.JLabel();
-        txtNhapMKM = new javax.swing.JTextField();
         lblNhapLMK = new javax.swing.JLabel();
-        txtNhapLMK = new javax.swing.JTextField();
         btnLuu = new javax.swing.JButton();
+        jLabel1 = new javax.swing.JLabel();
+        txtEmail = new javax.swing.JTextField();
+        txtNhapMKHT = new javax.swing.JPasswordField();
+        txtNhapMKM = new javax.swing.JPasswordField();
+        txtNhapLMK = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -49,19 +56,7 @@ public class CaiLaiMatKhau extends javax.swing.JFrame {
 
         lblNhapMKHT.setText("Nhập mật khẩu hiện tại:");
 
-        txtNhapMKHT.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNhapMKHTActionPerformed(evt);
-            }
-        });
-
         lblNhapMKM.setText("Nhập mật khẩu mới:");
-
-        txtNhapMKM.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNhapMKMActionPerformed(evt);
-            }
-        });
 
         lblNhapLMK.setText("Nhập lại mật khẩu mới:");
 
@@ -73,61 +68,72 @@ public class CaiLaiMatKhau extends javax.swing.JFrame {
             }
         });
 
+        jLabel1.setText("Email");
+
+        txtEmail.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtEmailActionPerformed(evt);
+            }
+        });
+
+        txtNhapMKHT.setVerifyInputWhenFocusTarget(false);
+
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
         jPanel1Layout.setHorizontalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel1Layout.createSequentialGroup()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGap(12, 12, 12)
+                .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(134, 134, 134)
+                .addComponent(lblTitle)
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(12, 12, 12)
-                        .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 95, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(104, 104, 104)
-                        .addComponent(lblTitle))
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(103, 103, 103)
-                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                            .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 81, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addComponent(lblNhapLMK)
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addComponent(txtNhapLMK))
-                                .addGroup(jPanel1Layout.createSequentialGroup()
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                        .addComponent(lblNhapMKM)
-                                        .addComponent(lblNhapMKHT))
-                                    .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                        .addComponent(txtNhapMKHT)
-                                        .addComponent(txtNhapMKM, javax.swing.GroupLayout.PREFERRED_SIZE, 241, javax.swing.GroupLayout.PREFERRED_SIZE)))))))
-                .addContainerGap(114, Short.MAX_VALUE))
+                        .addGap(69, 69, 69)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblNhapLMK)
+                            .addComponent(lblNhapMKHT)
+                            .addComponent(jLabel1)
+                            .addComponent(lblNhapMKM))
+                        .addGap(55, 55, 55)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(txtEmail, javax.swing.GroupLayout.DEFAULT_SIZE, 241, Short.MAX_VALUE)
+                            .addComponent(txtNhapMKHT)
+                            .addComponent(txtNhapMKM)
+                            .addComponent(txtNhapLMK))))
+                .addGap(86, 86, 86))
         );
         jPanel1Layout.setVerticalGroup(
             jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addContainerGap()
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnHome, javax.swing.GroupLayout.PREFERRED_SIZE, 48, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(lblTitle))
-                .addGap(47, 47, 47)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 22, Short.MAX_VALUE)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(txtEmail, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(jLabel1))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNhapMKHT)
-                    .addComponent(txtNhapMKHT, javax.swing.GroupLayout.PREFERRED_SIZE, 33, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(26, 26, 26)
-                        .addComponent(lblNhapMKM))
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addGap(18, 18, 18)
-                        .addComponent(txtNhapMKM, javax.swing.GroupLayout.PREFERRED_SIZE, 38, javax.swing.GroupLayout.PREFERRED_SIZE)))
-                .addGap(26, 26, 26)
+                    .addComponent(txtNhapMKHT, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(39, 39, 39)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(lblNhapMKM)
+                    .addComponent(txtNhapMKM, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(34, 34, 34)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(lblNhapLMK)
-                    .addComponent(txtNhapLMK, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(39, 39, 39)
+                    .addComponent(txtNhapLMK, javax.swing.GroupLayout.PREFERRED_SIZE, 35, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
                 .addComponent(btnLuu, javax.swing.GroupLayout.PREFERRED_SIZE, 39, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(57, Short.MAX_VALUE))
+                .addGap(22, 22, 22))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -135,8 +141,8 @@ public class CaiLaiMatKhau extends javax.swing.JFrame {
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addContainerGap())
+                .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
@@ -148,17 +154,46 @@ public class CaiLaiMatKhau extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void txtNhapMKMActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNhapMKMActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_txtNhapMKMActionPerformed
-
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
         // TODO add your handling code here:
+        try {
+            String url = "jdbc:sqlserver://localhost:1433;databasename=moto_shop";
+            String username="sa";
+            String password = "sapassword";
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            Connection con= DriverManager.getConnection(url, username, password);
+            
+            String pass= txtNhapMKHT.getText();
+            String newPass= txtNhapMKM.getText();
+            String confirmNewPass= txtNhapLMK.getText();
+            String email= txtEmail.getText();
+            
+            Statement stm= con.createStatement();
+            String sql= "UPDATE [dbo].[TaiKhoan] SET password = '"+newPass+"' WHERE (maNV in (SELECT NhanVien.maNV FROM NhanVien INNER JOIN TaiKhoan ON NhanVien.maNV = TaiKhoan.maNV where NhanVien.email= '"+email+"')) and (password='"+pass+"')";
+            if (pass.isBlank()|| newPass.isBlank()|| confirmNewPass.isBlank()|| email.isBlank()){
+                JOptionPane.showMessageDialog(this, "Vui lòng nhập đầy đủ thông tin");
+            }
+            else
+            if (!newPass.equals(confirmNewPass)){
+                JOptionPane.showMessageDialog(this, "Nhập lại mật khẩu không khớp");
+            }
+            else{
+                int row= stm.executeUpdate(sql);
+                if (row > 0){
+                    JOptionPane.showMessageDialog(this, "Đổi mật khấu thành công");
+                }else{
+                    JOptionPane.showMessageDialog(this, "Thông tin tài khoản không chính xác");
+                }
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_btnLuuActionPerformed
 
-    private void txtNhapMKHTActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNhapMKHTActionPerformed
+    private void txtEmailActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtEmailActionPerformed
         // TODO add your handling code here:
-    }//GEN-LAST:event_txtNhapMKHTActionPerformed
+    }//GEN-LAST:event_txtEmailActionPerformed
 
     /**
      * @param args the command line arguments
@@ -198,13 +233,15 @@ public class CaiLaiMatKhau extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHome;
     private javax.swing.JButton btnLuu;
+    private javax.swing.JLabel jLabel1;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JLabel lblNhapLMK;
     private javax.swing.JLabel lblNhapMKHT;
     private javax.swing.JLabel lblNhapMKM;
     private javax.swing.JLabel lblTitle;
-    private javax.swing.JTextField txtNhapLMK;
-    private javax.swing.JTextField txtNhapMKHT;
-    private javax.swing.JTextField txtNhapMKM;
+    private javax.swing.JTextField txtEmail;
+    private javax.swing.JPasswordField txtNhapLMK;
+    private javax.swing.JPasswordField txtNhapMKHT;
+    private javax.swing.JPasswordField txtNhapMKM;
     // End of variables declaration//GEN-END:variables
 }

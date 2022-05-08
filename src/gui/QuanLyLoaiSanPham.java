@@ -47,11 +47,11 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame {
         btnThoat.setText("Back");
 
         lblTitleQuanLyLoaiSanPham.setFont(new java.awt.Font("Segoe UI", 1, 18)); // NOI18N
-        lblTitleQuanLyLoaiSanPham.setText("QUAN LY LOAI SAN PHAM ");
+        lblTitleQuanLyLoaiSanPham.setText("QUẢN LÝ LOẠI SẢN PHẨM");
 
-        lblMaLoai.setText("Ma Loai: ");
+        lblMaLoai.setText("Mã Loại: ");
 
-        lblTenLoai.setText("Ten Loai:");
+        lblTenLoai.setText("Tên Loại:");
 
         txtMaLoai.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
@@ -60,10 +60,10 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame {
         });
 
         jButton2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/reset.png"))); // NOI18N
-        jButton2.setText("Xoa Trang");
+        jButton2.setText("Xóa Trắng");
 
         jButton3.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/add.png"))); // NOI18N
-        jButton3.setText("Them");
+        jButton3.setText("Thêm");
         jButton3.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton3ActionPerformed(evt);
@@ -71,13 +71,13 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame {
         });
 
         jButton4.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/fix.png"))); // NOI18N
-        jButton4.setText("Sua");
+        jButton4.setText("Sửa");
 
         jButton5.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/delete.png"))); // NOI18N
-        jButton5.setText("Xoa");
+        jButton5.setText("Xóa");
 
         jButton6.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/save.png"))); // NOI18N
-        jButton6.setText("Luu");
+        jButton6.setText("Lưu");
 
         tableQuanLyLoaiSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -87,7 +87,7 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame {
                 {null, null}
             },
             new String [] {
-                "Ma loai", "Ten loai"
+                "Mã loại", "Tên loại"
             }
         ));
         jScrollPane1.setViewportView(tableQuanLyLoaiSanPham);

@@ -4,6 +4,12 @@
  */
 package gui;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.ResultSet;
+import java.sql.Statement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author Dragon
@@ -31,8 +37,8 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         txtUserName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         btnLogIn = new javax.swing.JButton();
+        txtPassWord = new javax.swing.JPasswordField();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -43,6 +49,8 @@ public class DangNhap extends javax.swing.JFrame {
         jLabel2.setText("Log in");
 
         jLabel3.setText("User name:");
+
+        txtUserName.setText("tudoan8021@gmail.com");
 
         jLabel4.setText("Password:");
 
@@ -55,26 +63,28 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
 
+        txtPassWord.setText("123");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(96, 96, 96)
+                .addGap(84, 84, 84)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addComponent(txtUserName, javax.swing.GroupLayout.DEFAULT_SIZE, 247, Short.MAX_VALUE)
-                    .addComponent(txtPassword)
+                    .addComponent(txtUserName)
                     .addComponent(jLabel4)
                     .addComponent(jLabel3)
                     .addComponent(jLabel2)
                     .addComponent(jLabel1)
-                    .addComponent(btnLogIn, javax.swing.GroupLayout.Alignment.TRAILING))
-                .addContainerGap(95, Short.MAX_VALUE))
+                    .addComponent(btnLogIn, javax.swing.GroupLayout.Alignment.TRAILING)
+                    .addComponent(txtPassWord, javax.swing.GroupLayout.PREFERRED_SIZE, 247, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addContainerGap(84, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap(39, Short.MAX_VALUE)
+                .addContainerGap(47, Short.MAX_VALUE)
                 .addComponent(jLabel1)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel2)
@@ -84,11 +94,11 @@ public class DangNhap extends javax.swing.JFrame {
                 .addComponent(txtUserName, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
                 .addComponent(jLabel4)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(txtPassword, javax.swing.GroupLayout.PREFERRED_SIZE, 28, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(41, 41, 41)
+                .addGap(18, 18, 18)
+                .addComponent(txtPassWord, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(35, 35, 35)
                 .addComponent(btnLogIn)
-                .addGap(103, 103, 103))
+                .addGap(62, 62, 62))
         );
 
         pack();
@@ -96,6 +106,30 @@ public class DangNhap extends javax.swing.JFrame {
 
     private void btnLogInActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLogInActionPerformed
         // TODO add your handling code here:
+        try {
+            String url = "jdbc:sqlserver://localhost:1433;databasename=moto_shop";
+            String username="sa";
+            String password = "sapassword";
+            Class.forName("com.microsoft.sqlserver.jdbc.SQLServerDriver");  
+            Connection con= DriverManager.getConnection(url, username, password);
+            
+            String user= txtUserName.getText();
+            String pass= txtPassWord.getText();
+            Statement stm= con.createStatement();
+            String sql= "SELECT * FROM NhanVien INNER JOIN TaiKhoan ON NhanVien.maNV = TaiKhoan.maNV where NhanVien.email= '"+user+"' and TaiKhoan.password = '"+pass+"'";
+            
+            ResultSet rs= stm.executeQuery(sql);
+            if (rs.next()){
+                dispose();
+                Home hpage= new Home();
+                hpage.show();
+            }else{
+                JOptionPane.showMessageDialog(this, "Tài khoản hoặc tên đăng nhập không chính xác");
+            }
+            con.close();
+        } catch (Exception e) {
+            System.out.println(e.getMessage());
+        }
     }//GEN-LAST:event_btnLogInActionPerformed
 
     /**
@@ -139,7 +173,7 @@ public class DangNhap extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
-    private javax.swing.JTextField txtPassword;
+    private javax.swing.JPasswordField txtPassWord;
     private javax.swing.JTextField txtUserName;
     // End of variables declaration//GEN-END:variables
 }
