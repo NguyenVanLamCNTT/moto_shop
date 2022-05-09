@@ -124,7 +124,7 @@ public class DangNhap extends javax.swing.JFrame {
                 Home hpage= new Home();
                 hpage.show();
             }else{
-                JOptionPane.showMessageDialog(this, "Tài khoản hoặc tên đăng nhập không chính xác");
+                JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác");
             }
             con.close();
         } catch (Exception e) {
