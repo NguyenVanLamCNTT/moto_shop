@@ -89,6 +89,7 @@ public class QuanLyPhongBan extends javax.swing.JFrame {
 
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/plus.png"))); // NOI18N
         btnThem.setText("Thêm");
+        
 
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/tools.png"))); // NOI18N
         btnSua.setText("Sữa");
