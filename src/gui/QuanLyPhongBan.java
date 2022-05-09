@@ -4,16 +4,31 @@
  */
 package gui;
 
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.JTable;
+import javax.swing.table.DefaultTableModel;
+
+import dao.DAO_PhongBan;
+import entity.PhongBan;
+
 /**
  *
  * @author Administrator
  */
-public class QuanLyPhongBan extends javax.swing.JFrame {
-
+public class QuanLyPhongBan extends javax.swing.JFrame implements MouseListener{
+	private DAO_PhongBan dao_pb;
+	private DefaultTableModel modelQuanLyPhongBan;
     /**
      * Creates new form QuanLyPhongBan
      */
     public QuanLyPhongBan() {
+    	DocDuLieuDatabasevaoTable();
+    	khoa();
         initComponents();
     }
 
@@ -25,7 +40,7 @@ public class QuanLyPhongBan extends javax.swing.JFrame {
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
-
+    	
         jPanel1 = new javax.swing.JPanel();
         jButton1 = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
@@ -54,25 +69,13 @@ public class QuanLyPhongBan extends javax.swing.JFrame {
         jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
         jLabel1.setForeground(java.awt.Color.blue);
         jLabel1.setText("Quản Lý Phòng Ban");
-
-        tableQuanLyPhongBan.setModel(new javax.swing.table.DefaultTableModel(
-            new Object [][] {
-
-            },
-            new String [] {
-                "Mã phòng ban", "Tên phòng ban"
-            }
-        ) {
-            Class[] types = new Class [] {
-                java.lang.String.class, java.lang.String.class
-            };
-
-            public Class getColumnClass(int columnIndex) {
-                return types [columnIndex];
-            }
-        });
+        
+        DAO_PhongBan dao_pb = new DAO_PhongBan();
+        String [] colHeader= {"Mã phòng ban", "Tên phòng ban"};
+        modelQuanLyPhongBan = new DefaultTableModel(colHeader, 0);
+        tableQuanLyPhongBan = new JTable(modelQuanLyPhongBan); 
         jScrollPane1.setViewportView(tableQuanLyPhongBan);
-
+        
         lblMaPB.setText("Mã phòng ban:");
 
         lblTenPB.setText("Tên phòng ban:");
@@ -89,7 +92,11 @@ public class QuanLyPhongBan extends javax.swing.JFrame {
 
         btnThem.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/plus.png"))); // NOI18N
         btnThem.setText("Thêm");
-
+        btnThem.addActionListener(new java.awt.event.ActionListener(){
+        	public void actionPerformed(java.awt.event.ActionEvent evt) {
+        		btnThemActionPerformed(evt);
+        	}
+        });
         btnSua.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/tools.png"))); // NOI18N
         btnSua.setText("Sữa");
         btnSua.addActionListener(new java.awt.event.ActionListener() {
@@ -237,21 +244,68 @@ public class QuanLyPhongBan extends javax.swing.JFrame {
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
-
+    private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
+        int maPhongBan = Integer.parseInt(txtMaPB.getText()) ;
+        String tenPhongBan = txtTenPB.getText();
+        PhongBan pb = new PhongBan(maPhongBan, tenPhongBan);
+        try {
+			dao_pb.create(pb);
+			modelQuanLyPhongBan.addColumn(new Object[] {
+					pb.getMaPhongBan(),pb.getTenPhongBan()
+			});
+		} catch (Exception e) {
+			JOptionPane.showConfirmDialog(this, "Trùng");
+		}
+    }//GEN-LAST:event_btnSuaActionPerformed
     private void btnSuaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnSuaActionPerformed
-        // TODO add your handling code here:
+    	try {
+    		txtMaPB.setEditable(false);
+    		PhongBan pb = new PhongBan();
+    		pb.setMaPhongBan(Integer.parseInt(txtMaPB.getText()));
+    		pb.setTenPhongBan(txtTenPB.getText());
+    		if (dao_pb.update(pb)) {
+    			JOptionPane.showConfirmDialog(this,"Sửa thành công");
+    		}else {
+    			JOptionPane.showConfirmDialog(this, "Sửa thất bại");
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
     }//GEN-LAST:event_btnSuaActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
-        // TODO add your handling code here:
+    	try {
+    		PhongBan pb = new PhongBan();
+    		pb.setMaPhongBan(Integer.parseInt(txtMaPB.getText()));
+    		pb.setTenPhongBan(txtTenPB.getText());
+    		if (dao_pb.delete(Integer.parseInt(txtMaPB.getText()))) {
+    			JOptionPane.showConfirmDialog(this,"Sửa thành công");
+    		}else {
+    			JOptionPane.showConfirmDialog(this, "Sửa thất bại");
+    		}
+    	} catch (Exception e) {
+    		e.printStackTrace();
+    	}
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnLuuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLuuActionPerformed
-        // TODO add your handling code here:
+       try {
+		PhongBan pb = new PhongBan();
+		pb.setMaPhongBan(Integer.parseInt(txtMaPB.getText()));
+		pb.setTenPhongBan(txtTenPB.getText());
+		if (dao_pb.insert(pb)) {
+			JOptionPane.showConfirmDialog(this,"Lưu thành công");
+		}else {
+			JOptionPane.showConfirmDialog(this, "Lưu thất bại");
+		}
+	} catch (Exception e) {
+		e.printStackTrace();
+	}
     }//GEN-LAST:event_btnLuuActionPerformed
 
     private void btnXoaTrangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaTrangActionPerformed
-        // TODO add your handling code here:
+        txtMaPB.setText("");
+        txtNhapTenPB.setText("");
     }//GEN-LAST:event_btnXoaTrangActionPerformed
 
     private void txtTenPBActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtTenPBActionPerformed
@@ -300,7 +354,22 @@ public class QuanLyPhongBan extends javax.swing.JFrame {
             }
         });
     }
-
+    public void DocDuLieuDatabasevaoTable() {
+    	List<PhongBan> list = dao_pb.getAllPhongBan();
+    	for (PhongBan pb: list) {
+			modelQuanLyPhongBan.addRow(new Object[] {
+					pb.getMaPhongBan(),pb.getTenPhongBan()
+			});
+		}
+    }
+    private void khoa() {
+    	txtMaPB.setEditable(false);
+    	txtNhapTenPB.setEditable(false);
+    	btnLuu.setEnabled(false);
+    	btnThem.setEnabled(false);
+    	btnXoa.setEnabled(false);
+    	btnSua.setEnabled(false);
+    }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLuu;
     private javax.swing.JButton btnSua;
@@ -322,4 +391,39 @@ public class QuanLyPhongBan extends javax.swing.JFrame {
     private javax.swing.JTextField txtNhapTenPB;
     private javax.swing.JTextField txtTenPB;
     // End of variables declaration//GEN-END:variables
+	@Override
+	public void mouseClicked(MouseEvent e) {
+		// TODO Auto-generated method stub
+		int row = tableQuanLyPhongBan.getSelectedRow();
+		txtMaPB.setText(modelQuanLyPhongBan.getValueAt(row, 0).toString());
+		txtNhapTenPB.setText(modelQuanLyPhongBan.getValueAt(row, 1).toString());
+		txtTenPB.setEditable(false);
+		btnXoa.setEnabled(true);
+		btnSua.setEnabled(true);
+		btnThem.setEnabled(false);
+	}
+
+	@Override
+	public void mousePressed(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseReleased(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseEntered(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void mouseExited(MouseEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
 }

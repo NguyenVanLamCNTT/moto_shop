@@ -21,8 +21,7 @@ public class DAO_PhongBan {
 				int maPhongBan = rs.getInt(1);
 				String tenPhongBan = rs.getString(2);
 				PhongBan p = new PhongBan(maPhongBan, tenPhongBan);
-				dsPhongBan.add(p);
-				
+				dsPhongBan.add(p);			
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -34,7 +33,8 @@ public class DAO_PhongBan {
 		PreparedStatement stmt = null;
 		int n=0;
 		try {
-			stmt = con.prepareStatement("insert into" + " PhongBan(tenPhongBan) values(?)");
+			stmt = con.prepareStatement("insert into PhongBan(tenPhongBan)" + " values(?)");
+			
 			stmt.setString(1, pb.getTenPhongBan());
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
@@ -80,7 +80,19 @@ public class DAO_PhongBan {
 				e.printStackTrace();
 			}
 		}
-		return n >0;
-		
+		return n >0;	
+	}
+	public boolean insert(PhongBan pb) {
+		Connection con = ConnectDatabase.getConnection();
+		PreparedStatement stmt = null;	
+		String sql = "insert into PhongBan(tenPhongBan)" + " values(?)";
+		int n=0;
+		try {
+			stmt.setString(1, pb.getTenPhongBan());
+			n= stmt.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return n>0;
 	}
 }
