@@ -4,19 +4,46 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.util.Iterator;
+import java.util.List;
+
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
+import dao.DAO_LoaiXe;
+import entity.LoaiXe;
+
 /**
  *
  * @author Dragon
  */
-public class QuanLyLoaiSanPham extends javax.swing.JFrame {
+public class QuanLyLoaiSanPham extends javax.swing.JFrame implements ActionListener,MouseListener {
 
+	DefaultTableModel tableModel;
+	List<LoaiXe> listLoaiXe;
+	DAO_LoaiXe daoLoaiXe = new DAO_LoaiXe();
     /**
      * Creates new form QuanLyLoaiSanPham
      */
     public QuanLyLoaiSanPham() {
         initComponents();
+        tableModel = (DefaultTableModel) tableQuanLyLoaiSanPham.getModel();
+        showData();
+        Khoa();
     }
 
+    private void showData() {
+    	listLoaiXe = daoLoaiXe.getalltbLoaiXe();
+    	tableModel.setRowCount(0);
+    	for(LoaiXe item: listLoaiXe) {
+    		tableModel.addRow(new Object[] {item.getMaLoai(), item.getTenLoai()});
+    	}
+    }
+  
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -81,10 +108,10 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame {
 
         tableQuanLyLoaiSanPham.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
-                {null, null},
-                {null, null},
-                {null, null},
-                {null, null}
+//                {null, null},
+//                {null, null},
+//                {null, null},
+//                {null, null}
             },
             new String [] {
                 "Ma loai", "Ten loai"
@@ -165,6 +192,14 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame {
         );
 
         pack();
+      //  add event
+        jButton2.addActionListener(this); // xoa trang
+        jButton3.addActionListener(this); // them
+        jButton4.addActionListener(this); // sửa
+        jButton5.addActionListener(this); // xóa
+        jButton6.addActionListener(this); // luu
+        tableQuanLyLoaiSanPham.addMouseListener(this);
+        
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
@@ -225,5 +260,218 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame {
     private javax.swing.JTable tableQuanLyLoaiSanPham;
     private javax.swing.JTextField txtMaLoai;
     private javax.swing.JTextField txtTenLoai;
+    private int choose =0;
     // End of variables declaration//GEN-END:variables
+    //mo khoa control
+    private void Khoa() {
+    	txtMaLoai.setEditable(false);
+    	txtTenLoai.setEditable(false);
+    	jButton2.setEnabled(false);
+    	jButton4.setEnabled(false);
+    	jButton5.setEnabled(false);
+    	jButton6.setEnabled(false);
+    	
+    }
+    //dong control
+    
+    // hàm  hỗ trợ
+    
+    	// --------------------xoa trang--------------------
+    
+    		private void xoaTrang() {
+    			txtTenLoai.setText("");
+//    			txtMaLoai.setText("");
+    		}
+    	// ------------------------ket thuc xoa trang--------------------
+    		
+    	//------------------------- kiem tra nhap	--------------------
+    		private boolean kiemTraNhap() {
+    			if(txtTenLoai.getText().trim().equals("")) {
+    				txtTenLoai.requestFocus();
+    				return false;
+    			}
+    			
+    			return true;
+    			
+    		}
+    		
+    		
+    	//------------------------- ket thuc kiem tra nhap----------------		
+    
+    // hàm  hỗ trợ
+    
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
+		Object o = e.getSource();
+		if(o.equals(jButton3)) { // them
+			choose = 1;
+			if(jButton3.getText().equalsIgnoreCase("Them")) {
+				xoaTrang();
+				txtTenLoai.setEditable(true);
+				jButton6.setEnabled(true); // luu 
+				jButton2.setEnabled(true); // xoa trang
+				jButton5.setEnabled(false); // xóa
+				jButton4.setEnabled(false); // sửa
+				jButton3.setText("Hủy");
+			}
+			else if(jButton3.getText().equalsIgnoreCase("Hủy")) {
+				xoaTrang();
+				Khoa();
+				jButton3.setText("Them");
+				
+			}
+			
+			
+		}
+		
+		// xoa trang
+		if(o.equals(jButton2)) {
+			xoaTrang();
+		}
+		
+		// test
+		// test
+		
+		
+		// xóa 
+		if (o.equals(jButton5)) { // xóa
+			if(tableQuanLyLoaiSanPham.getSelectedRow()!=-1) {
+				
+				
+				if(JOptionPane.showConfirmDialog(this, "Ban Có Muốn Xóa","Cảnh Bảo",JOptionPane.YES_NO_OPTION)==JOptionPane.YES_OPTION) {
+					int r = tableQuanLyLoaiSanPham.getSelectedRow();
+					tableModel.removeRow(r); // xóa trong bảng
+					daoLoaiXe.delete(Integer.parseInt(txtMaLoai.getText()));
+					Khoa();
+					jButton3.setEnabled(true);
+					
+				}
+				else {
+					Khoa();
+					jButton3.setEnabled(true);
+					
+				}
+				
+				
+				
+			}
+
+			
+		} 
+		// sửa 
+		if(o.equals(jButton4)) {
+			choose=2;
+			if(tableQuanLyLoaiSanPham.getSelectedRow()!=-1) {
+				if(jButton4.getText().equalsIgnoreCase("Sua")) {
+					txtTenLoai.setEditable(true);
+					jButton2.setEnabled(true);
+					jButton3.setEnabled(false);
+					jButton5.setEnabled(false);
+					jButton6.setEnabled(true);
+					jButton4.setText("Hủy");
+					
+				}
+				else if(jButton4.getText().equalsIgnoreCase("Hủy")){
+					xoaTrang();
+					Khoa();
+					
+					
+					jButton3.setEnabled(true);
+					jButton4.setText("Sua");
+					
+					
+				}
+				
+			}
+			else {
+				JOptionPane.showMessageDialog(this, "vui lòng chọn nhân viên để cập nhật");
+			}
+			
+	
+			
+			
+		}
+		
+//		// luu 
+		if(o.equals(jButton6)) {
+			if(choose==1) {
+				if(kiemTraNhap()) {
+					String tenLoai = txtTenLoai.getText();
+					LoaiXe loaiXe = new LoaiXe(tenLoai);
+					daoLoaiXe.create(loaiXe);
+					showData();
+					JOptionPane.showMessageDialog(this, "Thêm Thành Công");
+					Khoa();
+					jButton3.setText("Them");
+				}
+				else {
+					JOptionPane.showMessageDialog(this, "Vui Lòng nhập đầy đủ thông tin");
+				}
+		
+				
+				
+				
+				
+			}
+			
+		
+			if(choose==2) {
+				int ma = Integer.parseInt( txtMaLoai.getText());
+				String tenLoai = txtTenLoai.getText();
+				LoaiXe loaiXe = new LoaiXe(ma, tenLoai);
+				daoLoaiXe.update(loaiXe);
+				showData();
+				JOptionPane.showMessageDialog(this, "Cập nhật thành công");
+				Khoa();
+				jButton3.setEnabled(true);
+				
+				jButton4.setText("Sua");
+				
+			
+				
+			}
+			
+		}
+		
+				
+		
+	}
+
+		@Override
+		public void mouseClicked(MouseEvent e) {
+			// TODO Auto-generated method stub
+			int row = tableQuanLyLoaiSanPham.getSelectedRow();
+			txtMaLoai.setText(tableModel.getValueAt(row, 0).toString());
+			txtTenLoai.setText(tableModel.getValueAt(row, 1).toString());
+			txtTenLoai.setEditable(false);
+			jButton5.setEnabled(true); // xóa
+			jButton4.setEnabled(true); // sửa
+			jButton3.setEnabled(false); // them
+			
+		}
+
+		@Override
+		public void mousePressed(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseReleased(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseEntered(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
+
+		@Override
+		public void mouseExited(MouseEvent e) {
+			// TODO Auto-generated method stub
+			
+		}
 }
