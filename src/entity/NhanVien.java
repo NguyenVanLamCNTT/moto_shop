@@ -9,6 +9,7 @@ public class NhanVien {
 	private String email;
 	private String gioiTinh;
 	private String role;
+	private String diaChi;
 	
 	public NhanVien() {
 		// TODO Auto-generated constructor stub
@@ -16,8 +17,23 @@ public class NhanVien {
 	public NhanVien(int maNV) {
 		this.maNV = maNV;
 	}
+	
+
+	
+
+	public NhanVien(String tenNV, String chucVu, String soDienThoai, String email, String gioiTinh, String role,
+			String diaChi) {
+		super();
+		this.tenNV = tenNV;
+		this.chucVu = chucVu;
+		this.soDienThoai = soDienThoai;
+		this.email = email;
+		this.gioiTinh = gioiTinh;
+		this.role = role;
+		this.diaChi = diaChi;
+	}
 	public NhanVien(int maNV, String tenNV, String chucVu, String soDienThoai, String email, String gioiTinh,
-			String role) {
+			String role, String diaChi) {
 		super();
 		this.maNV = maNV;
 		this.tenNV = tenNV;
@@ -26,18 +42,8 @@ public class NhanVien {
 		this.email = email;
 		this.gioiTinh = gioiTinh;
 		this.role = role;
+		this.diaChi = diaChi;
 	}
-
-	public NhanVien(String tenNV, String chucVu, String soDienThoai, String email, String gioiTinh, String role) {
-		super();
-		this.tenNV = tenNV;
-		this.chucVu = chucVu;
-		this.soDienThoai = soDienThoai;
-		this.email = email;
-		this.gioiTinh = gioiTinh;
-		this.role = role;
-	}
-
 	public int getMaNV() {
 		return maNV;
 	}
@@ -93,7 +99,14 @@ public class NhanVien {
 	public void setRole(String role) {
 		this.role = role;
 	}
+	
 
+	public String getDiaChi() {
+		return diaChi;
+	}
+	public void setDiaChi(String diaChi) {
+		this.diaChi = diaChi;
+	}
 	@Override
 	public String toString() {
 		return "NhanVien [maNV=" + maNV + ", tenNV=" + tenNV + ", chucVu=" + chucVu + ", soDienThoai=" + soDienThoai
