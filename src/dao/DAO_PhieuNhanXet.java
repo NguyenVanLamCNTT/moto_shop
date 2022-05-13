@@ -26,11 +26,11 @@ public class DAO_PhieuNhanXet {
 			while (rs.next()) {
 				int maPhieu = rs.getInt(1);
 				String liDoBH = rs.getString(2);
-				String loiThuocVE = rs.getString(3);
+				String loiThuocVe = rs.getString(3);
 				double giaTien = rs.getDouble(4);
 				NhanVien nhanVien = new NhanVien(rs.getInt(5));
 				KhachHang khachHang = new KhachHang(rs.getInt(6));
-				PhieuNhanXet pXN = new PhieuNhanXet(maPhieu, liDoBH, loiThuocVE, giaTien, nhanVien, khachHang);
+				PhieuNhanXet pXN = new PhieuNhanXet(maPhieu, liDoBH, loiThuocVe, giaTien, nhanVien, khachHang);
 				dsPNX.add(pXN);
 			}
 		} catch (Exception e) {
@@ -43,7 +43,7 @@ public class DAO_PhieuNhanXet {
 		PreparedStatement stmt = null;
 		int n=0;
 		try {
-			stmt = con.prepareStatement("insert into" + " PhieuNhanXet(?,?,?,?,?)");
+			stmt = con.prepareStatement("insert into PhieuNhanXet(liDoBH,loiThuocVe,giaTien,maNV,maKH) values(?,?,?,?,?)");
 			stmt.setString(1, pNX.getLiDoBH());
 			stmt.setString(2, pNX.getLoiThuocVe());
 			stmt.setDouble(3, pNX.getGiaTien());
