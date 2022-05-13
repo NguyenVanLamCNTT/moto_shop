@@ -7,6 +7,7 @@ package gui;
 
 import java.awt.Color;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.util.List;
 
@@ -37,18 +38,22 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
 	int maPB;
 	String gioiTinh;
 	String role;
+	NhanVien nhanVien;
     /**
      * Creates new form QuanLyNhanVien
      */
-    public QuanLyNhanVien() {
+    public QuanLyNhanVien(NhanVien nhanVien) {
         initComponents();
         this.setLocationRelativeTo(null);
+        setResizable(false);
         tableModelHC = (DefaultTableModel) tableNVHC.getModel();
         tableModelKT = (DefaultTableModel) talbeNVKT.getModel();
         showDataNVHC();
+        showDataNVKT();
         loadCbPhongBan();
         reset();
         radNamNVHC.setSelected(true);
+        this.nhanVien = nhanVien;
     }
     private void showDataNVHC(){
     	listNVHC = dao_NhanVien.getListNhanVienHanhChanh();
@@ -58,6 +63,13 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
     	});
     }
 
+    private void showDataNVKT() {
+    	listNVKT = dao_NhanVien.getListNhanVienKyThuat();
+    	tableModelKT.setRowCount(0);
+    	listNVKT.forEach(item -> {
+    		tableModelKT.addRow(new Object[] {item.getNhanVien().getMaNV(),item.getNhanVien().getTenNV(),item.getNhanVien().getGioiTinh(),item.getNhanVien().getSoDienThoai(),item.getNhanVien().getDiaChi(),item.getNhanVien().getEmail(),item.getNhanVien().getChucVu(),item.getNhanVien().getRole(),item.getBacTho(), item.getSoNamKinhNghiem()});
+    	});
+    }
     private void loadCbPhongBan() {
     	cboPhongBan.removeAllItems();
     	listPhongBan = dao_PhongBan.getAllPhongBan();
@@ -528,6 +540,16 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
 				searchNhanVien();
 			}
         });
+        btnThoatNVHC.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+		         new Home(nhanVien).setVisible(true);
+				
+			}
+		});
         javax.swing.GroupLayout pnMainNVHCLayout = new javax.swing.GroupLayout(pnMainNVHC);
         pnMainNVHC.setLayout(pnMainNVHCLayout);
         pnMainNVHCLayout.setHorizontalGroup(
@@ -1012,7 +1034,7 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanLyNhanVien().setVisible(true);
+//                new QuanLyNhanVien().setVisible(true);
             }
         });
     }

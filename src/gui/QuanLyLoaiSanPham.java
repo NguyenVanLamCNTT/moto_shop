@@ -16,6 +16,7 @@ import javax.swing.table.DefaultTableModel;
 
 import dao.DAO_LoaiXe;
 import entity.LoaiXe;
+import entity.NhanVien;
 
 /**
  *
@@ -26,14 +27,18 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame implements ActionListe
 	DefaultTableModel tableModel;
 	List<LoaiXe> listLoaiXe;
 	DAO_LoaiXe daoLoaiXe = new DAO_LoaiXe();
+	NhanVien nhanVien;
     /**
      * Creates new form QuanLyLoaiSanPham
      */
-    public QuanLyLoaiSanPham() {
+    public QuanLyLoaiSanPham(NhanVien nhanVien) {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         tableModel = (DefaultTableModel) tableQuanLyLoaiSanPham.getModel();
         showData();
         Khoa();
+        this.nhanVien = nhanVien;
     }
 
     private void showData() {
@@ -118,6 +123,15 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame implements ActionListe
             }
         ));
         jScrollPane1.setViewportView(tableQuanLyLoaiSanPham);
+        btnThoat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+		         new Home(nhanVien).setVisible(true);
+			}
+		});
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -240,7 +254,7 @@ public class QuanLyLoaiSanPham extends javax.swing.JFrame implements ActionListe
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanLyLoaiSanPham().setVisible(true);
+//                new QuanLyLoaiSanPham().setVisible(true);
             }
         });
     }

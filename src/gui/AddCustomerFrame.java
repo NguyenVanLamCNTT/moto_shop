@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import dao.DAO_KhachHang;
 import entity.KhachHang;
+import entity.NhanVien;
 
 /**
  *
@@ -17,14 +18,17 @@ import entity.KhachHang;
 public class AddCustomerFrame extends javax.swing.JFrame {
 	
 	private int maXe;
+	NhanVien nhanVien;
 	DAO_KhachHang dao_KhachHang = new DAO_KhachHang();
     /**
      * Creates new form AddCustomerFrame
      */
-    public AddCustomerFrame(int maXe) {
+    public AddCustomerFrame(int maXe, NhanVien nhanVien) {
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false);
         this.maXe = maXe;
+        this.nhanVien = nhanVien;
     }
     
     private void addCustomer() {
@@ -34,7 +38,7 @@ public class AddCustomerFrame extends javax.swing.JFrame {
     	if(dao_KhachHang.create(new KhachHang(tenKh, diaChi, soDT))) {
 			JOptionPane.showMessageDialog(this, "Thêm thành công!!");
 			dispose();
-			new QuanLyHopDong(maXe).setVisible(true);
+			new QuanLyHopDong(maXe, nhanVien).setVisible(true);
 		}else {
 			JOptionPane.showMessageDialog(this, "Thêm không thành công! Hãy thử lại");
 		}
@@ -194,7 +198,8 @@ public class AddCustomerFrame extends javax.swing.JFrame {
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
-        
+        dispose();
+        new Home().setVisible(true);
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnQuayLaiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnQuayLaiActionPerformed

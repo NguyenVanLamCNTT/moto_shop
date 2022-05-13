@@ -20,6 +20,8 @@ public class CaiLaiMatKhau extends javax.swing.JFrame {
      */
     public CaiLaiMatKhau() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**

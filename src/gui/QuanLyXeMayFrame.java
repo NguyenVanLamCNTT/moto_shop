@@ -27,6 +27,7 @@ import javax.swing.table.DefaultTableModel;
 import dao.DAO_LoaiXe;
 import dao.DAO_XeMay;
 import entity.LoaiXe;
+import entity.NhanVien;
 import entity.XeMay;
 
 /**
@@ -42,16 +43,19 @@ public class QuanLyXeMayFrame extends javax.swing.JFrame {
 	DAO_LoaiXe dao_LoaiXe = new DAO_LoaiXe();
 	String path = "";
 	NumberFormat formatter = new DecimalFormat("#0.00");
+	NhanVien nhanVien;
     /**
      * Creates new form NewJFrame
      */
-    public QuanLyXeMayFrame() {
+    public QuanLyXeMayFrame(NhanVien nhanVien) {
         initComponents();
         this.setLocationRelativeTo(null);
+        setResizable(false);
         tableModel = (DefaultTableModel) tableXeMay.getModel();
         showData();
         loadCbLoaiXe();
         reset();
+        this.nhanVien = nhanVien;
     }
 
     private void showData() {
@@ -622,6 +626,8 @@ public class QuanLyXeMayFrame extends javax.swing.JFrame {
 	}
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
+    	dispose();
+        new Home(nhanVien).setVisible(true);
     }//GEN-LAST:event_btnThoatActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -701,7 +707,7 @@ public class QuanLyXeMayFrame extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanLyXeMayFrame().setVisible(true);
+//                new QuanLyXeMayFrame().setVisible(true);
             }
         });
     }

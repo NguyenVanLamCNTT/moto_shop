@@ -4,6 +4,8 @@
  */
 package gui;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseEvent;
 import java.awt.event.MouseListener;
 import java.util.Iterator;
@@ -14,6 +16,7 @@ import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
 
 import dao.DAO_PhongBan;
+import entity.NhanVien;
 import entity.PhongBan;
 
 /**
@@ -23,15 +26,19 @@ import entity.PhongBan;
 public class QuanLyPhongBan extends javax.swing.JFrame implements MouseListener{
 	private DAO_PhongBan dao_pb = new DAO_PhongBan();
 	private DefaultTableModel modelQuanLyPhongBan;
+	private NhanVien  nhanVien;
     /**
      * Creates new form QuanLyPhongBan
      */
-    public QuanLyPhongBan() {
+    public QuanLyPhongBan(NhanVien nhanVien) {
     	
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
         modelQuanLyPhongBan = (DefaultTableModel) tableQuanLyPhongBan.getModel();
     	DocDuLieuDatabasevaoTable();
     	khoa();
+    	this.nhanVien =nhanVien;
     }
 
     /**
@@ -142,7 +149,16 @@ public class QuanLyPhongBan extends javax.swing.JFrame implements MouseListener{
                 btnXoaTrangActionPerformed(evt);
             }
         });
-
+       
+        jButton1.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				dispose();
+		         new Home(nhanVien).setVisible(true);
+			}
+		});
         jLabel2.setFont(new java.awt.Font("Tahoma", 1, 14)); // NOI18N
         jLabel2.setText("Nhập tên phòng ban");
 
@@ -352,7 +368,7 @@ public class QuanLyPhongBan extends javax.swing.JFrame implements MouseListener{
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanLyPhongBan().setVisible(true);
+//                new QuanLyPhongBan().setVisible(true);
             }
         });
     }

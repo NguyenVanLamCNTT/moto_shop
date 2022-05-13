@@ -5,19 +5,52 @@
  */
 package gui;
 
+import java.sql.SQLException;
+
+import entity.NhanVien;
+
 /**
  *
  * @author Pv
  */
 public class Home extends javax.swing.JFrame {
 
+	private int maNV;
+	private NhanVien nhanVien;
     /**
      * Creates new form Home
      */
     public Home() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
+    }
+    public Home(NhanVien nhanVien) {
+    	initComponents();
+    	setLocationRelativeTo(null);
+        setResizable(false);
+    	getNV(nhanVien);
+    	checkRole(nhanVien.getRole());
+    	this.maNV = nhanVien.getMaNV();
+    	this.nhanVien = nhanVien;
     }
 
+    private void getNV(NhanVien nhanVien) {
+    	lblTenNhanVien.setText(nhanVien.getTenNV());
+    	lblChucVu.setText(nhanVien.getChucVu());
+    }
+    private void  checkRole(String chucVu) {
+    	if(chucVu.equals("nvhc")) {
+    		btnPhieuNhanXet.setEnabled(false);
+    		btnNhanVien.setEnabled(false);
+    	}
+    	if (chucVu.equals("nhkt")) {
+			btnHopDong.setEnabled(false);
+			btnLoaiXe.setEnabled(false);
+			btnXeMay.setEnabled(false);
+			btnNhanVien.setEnabled(false);
+		}
+    }
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -41,7 +74,15 @@ public class Home extends javax.swing.JFrame {
         jSeparator5 = new javax.swing.JToolBar.Separator();
         btnHopDong = new javax.swing.JButton();
         jSeparator6 = new javax.swing.JToolBar.Separator();
-        jTabbedPane1 = new javax.swing.JTabbedPane();
+        btnLoaiXe = new javax.swing.JButton();
+        jSeparator8 = new javax.swing.JToolBar.Separator();
+        btnPhieuNhanXet = new javax.swing.JButton();
+        jPanel1 = new javax.swing.JPanel();
+        jLabel1 = new javax.swing.JLabel();
+        jLabel2 = new javax.swing.JLabel();
+        jLabel3 = new javax.swing.JLabel();
+        lblTenNhanVien = new javax.swing.JLabel();
+        lblChucVu = new javax.swing.JLabel();
         jMenuBar1 = new javax.swing.JMenuBar();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -61,23 +102,119 @@ public class Home extends javax.swing.JFrame {
 
         btnXeMay.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-motorcycle-50.png"))); // NOI18N
         btnXeMay.setText("XE MÁY");
+        btnXeMay.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnXeMayActionPerformed(evt);
+            }
+        });
         jToolBar2.add(btnXeMay);
         jToolBar2.add(jSeparator2);
 
         btnNhanVien.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-staff-20.png"))); // NOI18N
         btnNhanVien.setText("NHÂN VIÊN");
+        btnNhanVien.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnNhanVienActionPerformed(evt);
+            }
+        });
         jToolBar2.add(btnNhanVien);
         jToolBar2.add(jSeparator4);
 
         btnKhachHang.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-customer-20.png"))); // NOI18N
-        btnKhachHang.setText("KHÁCH HÀNG");
+        btnKhachHang.setText("Bán Hàng");
+        btnKhachHang.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnKhachHangActionPerformed(evt);
+            }
+        });
         jToolBar2.add(btnKhachHang);
         jToolBar2.add(jSeparator5);
 
         btnHopDong.setIcon(new javax.swing.ImageIcon(getClass().getResource("/image/icons8-contract-20.png"))); // NOI18N
         btnHopDong.setText("HỢP ĐỒNG");
+        btnHopDong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnHopDongActionPerformed(evt);
+            }
+        });
         jToolBar2.add(btnHopDong);
         jToolBar2.add(jSeparator6);
+
+        btnLoaiXe.setText("Loại xe");
+        btnLoaiXe.setFocusable(false);
+        btnLoaiXe.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnLoaiXe.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnLoaiXe.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnLoaiXeActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnLoaiXe);
+        jToolBar2.add(jSeparator8);
+
+        btnPhieuNhanXet.setText("Phiếu nhận xét");
+        btnPhieuNhanXet.setFocusable(false);
+        btnPhieuNhanXet.setHorizontalTextPosition(javax.swing.SwingConstants.CENTER);
+        btnPhieuNhanXet.setVerticalTextPosition(javax.swing.SwingConstants.BOTTOM);
+        btnPhieuNhanXet.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPhieuNhanXetActionPerformed(evt);
+            }
+        });
+        jToolBar2.add(btnPhieuNhanXet);
+
+        jPanel1.setBackground(new java.awt.Color(204, 204, 204));
+
+        jLabel1.setFont(new java.awt.Font("Tahoma", 1, 24)); // NOI18N
+        jLabel1.setText("Chào mừng bạn đến với hệ thống quán lý cửa hàng xe máy HONDA");
+
+        jLabel2.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel2.setText("Họ tên nhân viên:");
+
+        jLabel3.setFont(new java.awt.Font("Tahoma", 0, 18)); // NOI18N
+        jLabel3.setText("Chức vụ:");
+
+        lblTenNhanVien.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblTenNhanVien.setText("tên");
+
+        lblChucVu.setFont(new java.awt.Font("Tahoma", 0, 14)); // NOI18N
+        lblChucVu.setText("chức vụ");
+
+        javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
+        jPanel1.setLayout(jPanel1Layout);
+        jPanel1Layout.setHorizontalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(30, 30, 30)
+                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 804, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addGap(226, 226, 226)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                            .addComponent(jLabel2)
+                            .addComponent(jLabel3))
+                        .addGap(56, 56, 56)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblChucVu)
+                            .addComponent(lblTenNhanVien))))
+                .addContainerGap(83, Short.MAX_VALUE))
+        );
+        jPanel1Layout.setVerticalGroup(
+            jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+            .addGroup(jPanel1Layout.createSequentialGroup()
+                .addGap(34, 34, 34)
+                .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 63, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(29, 29, 29)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel2)
+                    .addComponent(lblTenNhanVien))
+                .addGap(33, 33, 33)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel3)
+                    .addComponent(lblChucVu))
+                .addContainerGap(258, Short.MAX_VALUE))
+        );
 
         setJMenuBar(jMenuBar1);
 
@@ -85,15 +222,19 @@ public class Home extends javax.swing.JFrame {
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
-            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, 592, Short.MAX_VALUE)
+            .addComponent(jToolBar2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addComponent(jToolBar2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(jTabbedPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 469, Short.MAX_VALUE))
+                .addGap(18, 18, 18)
+                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
@@ -102,6 +243,47 @@ public class Home extends javax.swing.JFrame {
     private void btnTrangChuActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnTrangChuActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnTrangChuActionPerformed
+
+    private void btnXeMayActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXeMayActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+    	new QuanLyXeMayFrame(nhanVien).setVisible(true);
+    }//GEN-LAST:event_btnXeMayActionPerformed
+
+    private void btnNhanVienActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnNhanVienActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+    	new QuanLyNhanVien(nhanVien).setVisible(true);
+    }//GEN-LAST:event_btnNhanVienActionPerformed
+
+    private void btnKhachHangActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKhachHangActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+    	new BanHangFrame(nhanVien).setVisible(true);
+    }//GEN-LAST:event_btnKhachHangActionPerformed
+
+    private void btnHopDongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnHopDongActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+    	new QuanLyHopDong(nhanVien).setVisible(true);
+    }//GEN-LAST:event_btnHopDongActionPerformed
+
+    private void btnLoaiXeActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoaiXeActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+    	new QuanLyLoaiSanPham(nhanVien).setVisible(true);
+    }//GEN-LAST:event_btnLoaiXeActionPerformed
+
+    private void btnPhieuNhanXetActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPhieuNhanXetActionPerformed
+        // TODO add your handling code here:
+    	dispose();
+    	try {
+			new PhieuNhanXet(nhanVien).setVisible(true);
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+    }//GEN-LAST:event_btnPhieuNhanXetActionPerformed
 
     /**
      * @param args the command line arguments
@@ -141,10 +323,16 @@ public class Home extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHopDong;
     private javax.swing.JButton btnKhachHang;
+    private javax.swing.JButton btnLoaiXe;
     private javax.swing.JButton btnNhanVien;
+    private javax.swing.JButton btnPhieuNhanXet;
     private javax.swing.JButton btnTrangChu;
     private javax.swing.JButton btnXeMay;
+    private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JPanel jPanel1;
     private javax.swing.JProgressBar jProgressBar1;
     private javax.swing.JToolBar.Separator jSeparator1;
     private javax.swing.JToolBar.Separator jSeparator2;
@@ -153,7 +341,9 @@ public class Home extends javax.swing.JFrame {
     private javax.swing.JToolBar.Separator jSeparator5;
     private javax.swing.JToolBar.Separator jSeparator6;
     private javax.swing.JToolBar.Separator jSeparator7;
-    private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JToolBar.Separator jSeparator8;
     private javax.swing.JToolBar jToolBar2;
+    private javax.swing.JLabel lblChucVu;
+    private javax.swing.JLabel lblTenNhanVien;
     // End of variables declaration//GEN-END:variables
 }

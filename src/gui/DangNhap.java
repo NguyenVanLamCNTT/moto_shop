@@ -10,6 +10,8 @@ import java.sql.ResultSet;
 import java.sql.Statement;
 import javax.swing.JOptionPane;
 
+import entity.NhanVien;
+
 /**
  *
  * @author Dragon
@@ -21,6 +23,8 @@ public class DangNhap extends javax.swing.JFrame {
      */
     public DangNhap() {
         initComponents();
+        setLocationRelativeTo(null);
+        setResizable(false);
     }
 
     /**
@@ -50,8 +54,6 @@ public class DangNhap extends javax.swing.JFrame {
 
         jLabel3.setText("User name:");
 
-        txtUserName.setText("tudoan8021@gmail.com");
-
         jLabel4.setText("Password:");
 
         btnLogIn.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -63,7 +65,6 @@ public class DangNhap extends javax.swing.JFrame {
             }
         });
 
-        txtPassWord.setText("123");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -120,8 +121,13 @@ public class DangNhap extends javax.swing.JFrame {
             
             ResultSet rs= stm.executeQuery(sql);
             if (rs.next()){
+            	NhanVien nhanVien = new NhanVien();
+            	nhanVien.setMaNV(rs.getInt("maNV"));
+            	nhanVien.setTenNV(rs.getString("tenNV"));
+            	nhanVien.setChucVu(rs.getString("chucVu"));
+            	nhanVien.setRole(rs.getString("role"));
                 dispose();
-                Home hpage= new Home();
+                Home hpage= new Home(nhanVien);
                 hpage.show();
             }else{
                 JOptionPane.showMessageDialog(this, "Tài khoản hoặc mật khẩu không chính xác");

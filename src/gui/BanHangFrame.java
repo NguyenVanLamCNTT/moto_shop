@@ -17,6 +17,7 @@ import java.util.List;
 import javax.swing.ImageIcon;
 import javax.swing.table.DefaultTableModel;
 import dao.DAO_XeMay;
+import entity.NhanVien;
 import entity.XeMay;
 
 /**
@@ -30,6 +31,7 @@ public class BanHangFrame extends javax.swing.JFrame {
 	String path = "";
 	NumberFormat formatter = new DecimalFormat("#0.00");
 	private int maXe;
+	private NhanVien nhanVien;
 
     /**
      * Creates new form BanHangFrame
@@ -37,9 +39,18 @@ public class BanHangFrame extends javax.swing.JFrame {
     public BanHangFrame() {
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false);
         tableModel = (DefaultTableModel) tableXeMay.getModel();
         showData();
         loadDetailXe(listXeMay.get(0).getMaXe());
+    }
+    public BanHangFrame(NhanVien nhanVien) {
+        initComponents();
+        setLocationRelativeTo(null);
+        tableModel = (DefaultTableModel) tableXeMay.getModel();
+        showData();
+        loadDetailXe(listXeMay.get(0).getMaXe());
+        this.nhanVien = nhanVien;
     }
 
     private void showData() {
@@ -169,7 +180,7 @@ public class BanHangFrame extends javax.swing.JFrame {
 			private void btnToaHDActionPerformed(ActionEvent evt) {
 				// TODO Auto-generated method stub
 				dispose();
-				new AddCustomerFrame(maXe).setVisible(true);
+				new AddCustomerFrame(maXe, nhanVien).setVisible(true);
 				
 			}
         });
@@ -239,6 +250,8 @@ public class BanHangFrame extends javax.swing.JFrame {
 
     private void btnThoatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThoatActionPerformed
         // TODO add your handling code here:
+    	 dispose();
+         new Home(nhanVien).setVisible(true);
     }//GEN-LAST:event_btnThoatActionPerformed
 
     /**

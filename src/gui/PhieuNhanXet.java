@@ -25,16 +25,19 @@ import util.ConnectDatabase;
  * @author Admin
  */
 public class PhieuNhanXet extends javax.swing.JFrame {
+	NhanVien nhanVien;
 	DefaultTableModel tableModel;
 	DAO_PhieuNhanXet dao_pnx = new DAO_PhieuNhanXet();
 	List<entity.PhieuNhanXet> listPNX;
-    public PhieuNhanXet() throws SQLException {
+    public PhieuNhanXet(NhanVien nhanVien) throws SQLException {
     	
 	    initComponents();
 	    setLocationRelativeTo(null);
+        setResizable(false);
 	    tableModel = (DefaultTableModel) jTable1.getModel();
 	    showData();
 	    reset();
+	    this.nhanVien = nhanVien;
 	}
 
 	/**
@@ -260,6 +263,7 @@ public class PhieuNhanXet extends javax.swing.JFrame {
 
 			private void btnThoatActionPerformed(ActionEvent evt) {
 				dispose();
+		         new Home(nhanVien).setVisible(true);
 				
 			}
         });
@@ -565,12 +569,12 @@ public class PhieuNhanXet extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                try {
-					new PhieuNhanXet().setVisible(true);
-				} catch (SQLException e) {
-				
-					e.printStackTrace();
-				}
+//                try {
+//					new PhieuNhanXet().setVisible(true);
+//				} catch (SQLException e) {
+//				
+//					e.printStackTrace();
+//				}
             }
         });
     }

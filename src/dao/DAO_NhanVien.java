@@ -340,4 +340,34 @@ public class DAO_NhanVien {
 			return null;
 		}
 	}
+	public List<NhanVienKyThuat> getNhanVienKyThuat(){
+		List<NhanVienKyThuat> list = new ArrayList<NhanVienKyThuat>();
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "select * from NhanVien as nv join NhanVienKyThuat as nvkt on nv.maNV = nvkt.maNV";
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				NhanVien nhanVien = new NhanVien();
+				nhanVien.setMaNV(rs.getInt("maNV"));
+				nhanVien.setTenNV(rs.getString("tenNV"));
+				nhanVien.setChucVu(rs.getString("chucVu"));
+				nhanVien.setEmail(rs.getString("email"));
+				nhanVien.setGioiTinh(rs.getString("gioiTinh"));
+				nhanVien.setRole(rs.getString("role"));
+				nhanVien.setSoDienThoai(rs.getString("soDienThoai"));
+				nhanVien.setDiaChi(rs.getString("diaChi"));
+				NhanVienKyThuat nhanVienKyThuat = new NhanVienKyThuat();
+				nhanVienKyThuat.setBacTho(rs.getString("bacTho"));
+				nhanVienKyThuat.setNhanVien(nhanVien);
+				nhanVienKyThuat.setSoNamKinhNghiem(rs.getInt("soNamKinhNghiem"));
+				list.add(nhanVienKyThuat);
+			}
+			return list;
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+}
 }

@@ -7,6 +7,7 @@ package gui;
 import java.awt.Color;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.awt.event.MouseEvent;
@@ -62,12 +63,14 @@ public class QuanLyHopDong extends javax.swing.JFrame {
 	int maNV = 22;
 	int maKH = 0;
 	int maXe = 0;
+	NhanVien nhanVien;
     /**
      * Creates new form QuanLyHopDong
      */
-    public QuanLyHopDong(int maXe) {
+    public QuanLyHopDong(int maXe, NhanVien nhanVien) {
         initComponents();
         setLocationRelativeTo(null);
+        setResizable(false);
         tableModel = (DefaultTableModel) tableHopDong.getModel();
         loadData();
         reset();
@@ -78,13 +81,16 @@ public class QuanLyHopDong extends javax.swing.JFrame {
     	this.maKH = listKH.get(0).getMaKH();
     	txtMaKhachHang2.setText(String.valueOf(maKH));
     	txtMaNhanVien.setText(String.valueOf(maNV));
+    	this.maNV = nhanVien.getMaNV();
+    	this.nhanVien = nhanVien;
     }
-    public QuanLyHopDong() {
+    public QuanLyHopDong(NhanVien nhanVien) {
         initComponents();
         setLocationRelativeTo(null);
         tableModel = (DefaultTableModel) tableHopDong.getModel();
         loadData();
         reset();
+        this.nhanVien = nhanVien;
     }
 
     private void loadDetailXe(int maXe) {
@@ -462,6 +468,15 @@ public class QuanLyHopDong extends javax.swing.JFrame {
 				
 			}
 		});
+        btnThoat.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+					dispose();
+		         new Home(nhanVien).setVisible(true);
+			}
+		});
         javax.swing.GroupLayout jPanelNorthLayout = new javax.swing.GroupLayout(jPanelNorth);
         jPanelNorth.setLayout(jPanelNorthLayout);
         jPanelNorthLayout.setHorizontalGroup(
@@ -751,7 +766,7 @@ public class QuanLyHopDong extends javax.swing.JFrame {
         /* Create and display the form */
         java.awt.EventQueue.invokeLater(new Runnable() {
             public void run() {
-                new QuanLyHopDong().setVisible(true);
+//                new QuanLyHopDong().setVisible(true);
             }
         });
     }
