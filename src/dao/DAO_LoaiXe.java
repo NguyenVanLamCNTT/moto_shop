@@ -97,12 +97,9 @@ public class DAO_LoaiXe {
 		PreparedStatement stmt = null;	
 		int n=0;
 		try {
-			stmt = con.prepareStatement("update LoaiXe set tenLoai=?"+" where maNV=?");
-			
-			
+			stmt = con.prepareStatement("update LoaiXe set tenLoai=?"+" where maLoai=?");
 			stmt.setString(1, lx.getTenLoai());
 			stmt.setInt(2, lx.getMaLoai());
-			
 			n = stmt.executeUpdate();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -119,7 +116,7 @@ public class DAO_LoaiXe {
 		
 	}
 	public boolean delete(int maLoai) {
-		String sql = "delete form LoaiXe where maLoai=?";
+		String sql = "delete from LoaiXe where maLoai=?";
 		Connection con = ConnectDatabase.getConnection();
 		PreparedStatement stmt = null;	
 		int n=0;
