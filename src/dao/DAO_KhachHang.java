@@ -20,7 +20,7 @@ public class DAO_KhachHang {
 		try {
 			
 			Connection con = ConnectDatabase.getConnection();
-			String sql = "Select * from KhachHang";
+			String sql = "Select * from KhachHang ORDER BY maKH desc";
 			Statement statement = con.createStatement();
 			ResultSet rs = statement.executeQuery(sql);
 			

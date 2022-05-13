@@ -48,6 +48,7 @@ public class QuanLyNhanVien extends javax.swing.JFrame {
         showDataNVHC();
         loadCbPhongBan();
         reset();
+        radNamNVHC.setSelected(true);
     }
     private void showDataNVHC(){
     	listNVHC = dao_NhanVien.getListNhanVienHanhChanh();

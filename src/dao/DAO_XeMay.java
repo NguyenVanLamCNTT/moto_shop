@@ -153,4 +153,29 @@ public class DAO_XeMay {
 			return null;
 		}
 	}
+	public XeMay getXeMayByMaXe(int maXe){
+		List<XeMay> dsSach = new ArrayList<XeMay>();
+		Connection con = ConnectDatabase.getConnection();
+		String sql = "select * from XeMay as xm join LoaiXe as lx on xm.maLoai = lx.maLoai where maXe = " + maXe;
+		try {
+			PreparedStatement stmt = con.prepareStatement(sql);
+			ResultSet rs = stmt.executeQuery();
+			while(rs.next()) {
+				XeMay xeMay = new XeMay();
+				xeMay.setMaXe(rs.getInt("maXe"));
+				xeMay.setDongia(rs.getDouble("dongia"));
+				xeMay.setLoaiXe(new LoaiXe(rs.getInt("maLoai"), rs.getString("tenLoai")));
+				xeMay.setMauXe(rs.getString("mauXe"));
+				xeMay.setNuocSanXuat(rs.getString("nuocSanXuat"));
+				xeMay.setSoPK(rs.getInt("soPK"));
+				xeMay.setTenXe(rs.getString("tenXe"));
+				dsSach.add(xeMay);
+			}
+			return dsSach.get(0);
+		}catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			return null;
+		}
+	}
 }
