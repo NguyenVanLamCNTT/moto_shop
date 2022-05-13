@@ -23,10 +23,12 @@ public class DAO_PhongBan {
 				PhongBan p = new PhongBan(maPhongBan, tenPhongBan);
 				dsPhongBan.add(p);			
 			}
+			return dsPhongBan;
 		} catch (Exception e) {
 			e.printStackTrace();
+			return null;
 		}
-		return dsPhongBan;
+		
 	}
 	public boolean create(PhongBan pb) {
 		Connection con = ConnectDatabase.getConnection();

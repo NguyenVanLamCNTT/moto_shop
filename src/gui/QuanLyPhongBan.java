@@ -21,15 +21,17 @@ import entity.PhongBan;
  * @author Administrator
  */
 public class QuanLyPhongBan extends javax.swing.JFrame implements MouseListener{
-	private DAO_PhongBan dao_pb;
+	private DAO_PhongBan dao_pb = new DAO_PhongBan();
 	private DefaultTableModel modelQuanLyPhongBan;
     /**
      * Creates new form QuanLyPhongBan
      */
     public QuanLyPhongBan() {
+    	
+        initComponents();
+        modelQuanLyPhongBan = (DefaultTableModel) tableQuanLyPhongBan.getModel();
     	DocDuLieuDatabasevaoTable();
     	khoa();
-        initComponents();
     }
 
     /**
@@ -356,6 +358,7 @@ public class QuanLyPhongBan extends javax.swing.JFrame implements MouseListener{
     }
     public void DocDuLieuDatabasevaoTable() {
     	List<PhongBan> list = dao_pb.getAllPhongBan();
+    	modelQuanLyPhongBan.setRowCount(0);
     	for (PhongBan pb: list) {
 			modelQuanLyPhongBan.addRow(new Object[] {
 					pb.getMaPhongBan(),pb.getTenPhongBan()
@@ -366,7 +369,7 @@ public class QuanLyPhongBan extends javax.swing.JFrame implements MouseListener{
     	txtMaPB.setEditable(false);
     	txtNhapTenPB.setEditable(false);
     	btnLuu.setEnabled(false);
-    	btnThem.setEnabled(false);
+    	btnThem.setEnabled(true);
     	btnXoa.setEnabled(false);
     	btnSua.setEnabled(false);
     }
